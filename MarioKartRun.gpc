@@ -1,0 +1,122 @@
+#pragma METAINFO("joycon_Mario_Kart", 1,0, "<Super Louis 64>")
+
+
+/*
+Mario Kart meets Ringfit
+DM @SuperLouis_64 if you need any help.
+
+Please credit @SuperLouis_64 if you used the mod for any post online
+I've put a ton of time figuring this out and to keep the mods free
+all I ask is for credit
+
+*/
+
+bool controllerON;
+bool isRunning;
+
+int runCheck;
+
+init
+{
+	controllerON = FALSE;
+	isRunning = FALSE;
+	
+	
+	// remap sticks so you can run with the right joycon.
+	remapper_swap(STICK_2_X, STICK_1_X);
+	remapper_swap(STICK_2_Y, STICK_1_Y);
+	runCheck = 0;
+}
+
+
+
+main 
+{
+	// this program deals with checking runs, explained after main()
+	nowRunning();
+	
+	//if you are underneath the pace threshold, do this
+	// Louis' note: check back on this because why is this here?
+	if(runCheck < 60)
+		{
+			
+			if(get_val(BUTTON_3) > 0.0) // switch the + button with -
+				{
+					set_val(BUTTON_3, 0.0); 
+					set_val(BUTTON_2, 100.0);
+				}
+			
+		}
+
+	//Aceel_2_Y > -2 and Acell_2_z > 20
+		if(get_val(ACCEL_2_Y) > -2.0 && get_val(ACCEL_2_Z) > 20.0)
+			{
+				set_val(BUTTON_8, 100.0); 
+			}
+
+
+	// if you are running or above pace, do this
+	if(runCheck >= 50)
+		{					
+			
+		set_val(BUTTON_15, 100.0); // Run to drive
+					
+		}
+
+// turn off D-pad so it doesn't be messed with on the legstrap		
+set_val(BUTTON_10, 0.0);
+set_val(BUTTON_11, 0.0);
+set_val(BUTTON_12, 0.0);
+set_val(BUTTON_13, 0.0);
+		
+/*
+///////////////////////////////////////////////		
+Below is just a mash-up of button swaps
+This allows the user to play with just one joycon
+
+the magic numbers are based off of personal tests
+///////////////////////////////////////////////
+*/
+		
+// terrible way to determine if ringcon is squeezed. Titan Two doesn't grab the flex sensor
+// however this is what I got from the ringcon to squeeze to use item
+// You can also do this without the ringcon, just punch and it should do the same input
+	if(get_val(ACCEL_2_X) < -25.0)
+		{
+			set_val(BUTTON_7, 100.0); // use items
+		}		
+
+//debug();
+
+}
+
+/*
+	Quick explanation for how my duct-tape run checks are done
+	Whenever you "run" my program sets the variable to runCheck = 100
+	every tick, the variable is reduced by -- (1)
+	This way there isn't an immediate loss of movement in-game 
+	There are definitely better way to do this with better math
+	Plans to update this later on!
+
+*/
+void nowRunning()
+{
+	if(get_val(ACCEL_1_Y) < -30.6)
+		{
+			runCheck = 100;	
+				
+		}
+	if(get_val(ACCEL_1_Y) < -23.8 && get_val(ACCEL_1_Y) > -24.6)
+		{
+			runCheck--;
+		}
+
+}
+
+
+// debug check for my runCheck
+void debug()
+{
+	printf("%d", runCheck);
+	
+}
