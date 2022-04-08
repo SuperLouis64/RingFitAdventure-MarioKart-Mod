@@ -24,7 +24,7 @@ I have an old video that shows a how to set-up the mod. It will be updated for t
 1. Connect your Titan Two to your Switch via the OUTPUT port
 2. Connect your Titan Two to your PC via the PROG port
 3. Open up the Gtuner IV software
-4. Load the MarioKartRun.gpc file to the Gtuner IV GPC Script IDE
+4. Load the MarioKart_RunToDrive.gpc file to the Gtuner IV GPC Script IDE
 5. Connect your joycons to the Titan Two via the Device Configuration tab on the right side of the UI. (Use the "Wireless Bluetooth Pairing" button after activating the JoyCons Sync Button")
 6. Turn on your Nintendo Switch and launch Mario Kart 8
 7. Press the Green "Test and debug" Arrow on Menu file
