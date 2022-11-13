@@ -28,7 +28,7 @@ init
 
 
 main 
-{TRUE
+{
 	// this program deals with checking runs, explained after main()
 	nowRunning();
 	
